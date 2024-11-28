@@ -8,6 +8,11 @@ app = Flask(__name__)
 # Array untuk menyimpan data
 data_array = []
 
+API_KEY = 'AIzaSyACzawZOpNwNB58pQoa28lFhp89Yor5aVI'
+gmaps = googlemaps.Client(key=API_KEY)
+origin = "-6.903710712010781, 107.56704420278929"
+destination = "-6.161668392129037, 106.88097402522885"
+
 @app.route('/upload', methods=['POST'])
 def upload_file():
     if 'file' not in request.files:
@@ -22,6 +27,10 @@ def upload_file():
         # Membaca file Excel langsung dari bytes (tanpa menyimpannya ke disk)
         try:
             df = pd.read_excel(BytesIO(file.read()))
+            df['Jarak'] = "145 km"
+            df['Estimasi'] = "1 Jam 45 Menit"
+            df['Period'] = "S1P1"
+            df['Rekomendasi'] = "Anda sebaiknya berangkat puluk 05:30"
             # Mengonversi data Excel menjadi dictionary
             global data_array
             data_array = df.to_dict(orient='records')
