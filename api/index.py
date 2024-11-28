@@ -43,5 +43,6 @@ def get_data():
     
     return jsonify({"data": data_array}), 200
 
+# Untuk Vercel, kita harus menggunakan WSGI handler.
 if __name__ == '__main__':
     app.run(debug=True)
