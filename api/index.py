@@ -8,11 +8,20 @@ app = Flask(__name__)
 
 # Array untuk menyimpan data
 data_array = []
+df_base = null
 
 API_KEY = 'AIzaSyACzawZOpNwNB58pQoa28lFhp89Yor5aVI'
 gmaps = googlemaps.Client(key=API_KEY)
 origin = "-6.903710712010781, 107.56704420278929"
 destination = "-6.161668392129037, 106.88097402522885"
+
+def cek_jarak(coordinate):
+  result = gmaps.distance_matrix(origins=coordinate,
+                                destinations=destination,
+                                mode="driving",
+                                language="id",
+                                units="metric")
+  return result
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
@@ -27,7 +36,7 @@ def upload_file():
     if file and file.filename.endswith('.xlsx'):
         # Membaca file Excel langsung dari bytes (tanpa menyimpannya ke disk)
         try:
-            df = pd.read_excel(BytesIO(file.read()))
+            df_base = pd.read_excel(BytesIO(file.read()))
             df['Jarak'] = "145 km"
             df['Estimasi'] = "1 Jam 45 Menit"
             df['Period'] = "S1P1"
