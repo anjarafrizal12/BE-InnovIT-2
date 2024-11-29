@@ -49,13 +49,13 @@ def process_data():
 
       if round(duration_minutes) <= 120:
         if index > 0:
-          waktu = datetime.combine(datetime.today(), datetime.min.time().replace(hour=6))
+          waktu = datetime.combine(datetime.today(), datetime.min.time().replace(hour=7))
           time_backwards = waktu - timedelta(minutes=duration_minutes-30)
           formatted_time = time_backwards.strftime("%H:%M")
           df_base.loc[index, 'Rekomendasi'] = "Anda diharuskan berangkat menuju plant sunter : "+str(formatted_time)
           df_base.loc[index, 'Period'] = "S1P1"
         else:
-          waktu = datetime.combine(datetime.today(), datetime.min.time().replace(hour=6))
+          waktu = datetime.combine(datetime.today(), datetime.min.time().replace(hour=7))
           time_backwards = waktu - timedelta(minutes=duration_minutes)
           formatted_time = time_backwards.strftime("%H:%M")
           df_base.loc[index, 'Rekomendasi'] = "Anda diharuskan berangkat menuju plant sunter : "+str(formatted_time)
