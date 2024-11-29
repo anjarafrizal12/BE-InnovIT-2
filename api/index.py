@@ -8,6 +8,10 @@ app = Flask(__name__)
 
 # Array untuk menyimpan data
 data_array = []
+array_period = []
+array_jarak = []
+array_recomm = []
+array_est = []
 df_base = None
 
 API_KEY = 'AIzaSyACzawZOpNwNB58pQoa28lFhp89Yor5aVI'
@@ -27,6 +31,15 @@ def cek_jarak(coordinate):
 def process_data():
   try:
     global df_base
+    global array_period
+    global array_jarak
+    global array_recomm
+    global array_est
+    array_jarak = []
+    array_recomm = []
+    array_period = []
+    array_est = []
+    
     # df_base = pd.read_excel(BytesIO(file.read()))
 
     for index, row in df_base.iterrows():
@@ -36,18 +49,25 @@ def process_data():
       duration_minutes = duration_seconds / 60
 
       if round(duration_minutes) <= 120:
-        df_base['Period'] = df_base.apply("S1P1")
+        array_period.append("S1P1")
       elif round(duration_minutes) > 120 and round(duration_minutes) <= 240:
-        df_base['Period'] = df_base.apply("S1P2")
+        array_period.append("S1P2")
       elif round(duration_minutes) > 240 and round(duration_minutes) <= 360:
-        df_base['Period'] = df_base.apply("S1P3")
+        array_period.append("S1P3")
       else:
-        df_base['Period'] = df_base.apply("S1P4")
+        array_period.append("S1P4")
+
       
-      df_base['Jarak'] = df_base.apply(distance)
-      df_base['Estimasi'] = df_base.apply(resultgoogle['rows'][0]['elements'][0]['duration']['value'])
-      df_base['Rekomendasi'] = "Anda sebaiknya berangkat puluk 05:30"
+      array_jarak.append(distance)
+      array_est.append(df_base.apply(resultgoogle['rows'][0]['elements'][0]['duration']['value']))
+      array_recomm.append("Anda sebaiknya berangkat puluk 05:30")
+      # df_base['Estimasi'] = df_base.apply(resultgoogle['rows'][0]['elements'][0]['duration']['value'])
+      # df_base['Rekomendasi'] = "Anda sebaiknya berangkat puluk 05:30"
             # Mengonversi data Excel menjadi dictionary
+    df_base['Jarak'] = array_jarak
+    df_base['Estimasi'] = array_est
+    df_base['Recomm'] = array_recomm
+    df_base['Period'] = array_period
     global data_array
     data_array = df_base.to_dict(orient='records')
     return jsonify({"message": "File uploaded successfully", "data": data_array}), 200
