@@ -42,7 +42,7 @@ def process_data():
       distance = resultgoogle["rows"][0]["elements"][0]["distance"]["text"]
       duration_minutes = duration_seconds / 60
 
-      df_base.loc[index, 'EstimasiReal'] = duration_minutes
+      # df_base.loc[index, 'EstimasiReal'] = duration_minutes
       df_base.loc[index, 'Jarak'] = distance
       df_base.loc[index, 'Estimasi'] = resultgoogle['rows'][0]['elements'][0]["duration"]["text"]
       
@@ -113,7 +113,7 @@ def process_data():
     # df_base['Recomm'] = array_recomm
     # df_base['Period'] = array_period
     global data_array
-    df_base_sorted = df_base.sort_values(by=['Period', 'EstimasiReal'], ascending=[True, True])
+    df_base_sorted = df_base.sort_values(by='Period')
     data_array = df_base_sorted.to_dict(orient='records')
     return jsonify({"message": "File uploaded successfully", "data": data_array}), 200
   except Exception as e:
