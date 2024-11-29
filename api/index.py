@@ -64,10 +64,10 @@ def process_data():
       # df_base['Estimasi'] = df_base.apply(resultgoogle['rows'][0]['elements'][0]['duration']['value'])
       # df_base['Rekomendasi'] = "Anda sebaiknya berangkat puluk 05:30"
             # Mengonversi data Excel menjadi dictionary
-    df_base['Jarak'] = array_jarak
-    df_base['Estimasi'] = array_est
-    df_base['Recomm'] = array_recomm
-    df_base['Period'] = array_period
+    # df_base['Jarak'] = array_jarak
+    # df_base['Estimasi'] = array_est
+    # df_base['Recomm'] = array_recomm
+    # df_base['Period'] = array_period
     global data_array
     data_array = df_base.to_dict(orient='records')
     return jsonify({"message": "File uploaded successfully", "data": data_array}), 200
