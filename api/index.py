@@ -29,6 +29,7 @@ def process_data():
     # df_base = pd.read_excel(BytesIO(file.read()))
 
     for index, row in df_base.iterrows():
+      print(row['Lat Long'])
       resultgoogle = cek_jarak(row['Lat Long'])
       duration_seconds = resultgoogle['rows'][0]['elements'][0]['duration']['value']
       distance = resultgoogle["rows"][0]["elements"][0]["distance"]["text"]
