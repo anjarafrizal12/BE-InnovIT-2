@@ -36,16 +36,16 @@ def process_data():
       duration_minutes = duration_seconds / 60
 
       if round(duration_minutes) <= 120:
-        df_base['Period'] = "S1P1"
+        df_base['Period'] = df_base.apply("S1P1")
       elif round(duration_minutes) > 120 and round(duration_minutes) <= 240:
-        df_base['Period'] = "S1P2"
+        df_base['Period'] = df_base.apply("S1P2")
       elif round(duration_minutes) > 240 and round(duration_minutes) <= 360:
-        df_base['Period'] = "S1P3"
+        df_base['Period'] = df_base.apply("S1P3")
       else:
-        df_base['Period'] = "S1P4"
+        df_base['Period'] = df_base.apply("S1P4")
       
-      df_base['Jarak'] = distance
-      df_base['Estimasi'] = resultgoogle['rows'][0]['elements'][0]['duration']['value']
+      df_base['Jarak'] = df_base.apply(distance)
+      df_base['Estimasi'] = df_base.apply(resultgoogle['rows'][0]['elements'][0]['duration']['value'])
       df_base['Rekomendasi'] = "Anda sebaiknya berangkat puluk 05:30"
             # Mengonversi data Excel menjadi dictionary
     global data_array
