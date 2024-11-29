@@ -46,22 +46,26 @@ def process_data():
       if round(duration_minutes) <= 120:
         waktu = datetime.combine(datetime.today(), datetime.min.time().replace(hour=6))
         time_backwards = waktu - timedelta(minutes=duration_minutes)
-        df_base.loc[index, 'Rekomendasi'] = "Anda diharuskan berangkat menuju plant sunter"+str(time_backwards.time())
+        formatted_time = time_backwards.strftime("%H:%M")
+        df_base.loc[index, 'Rekomendasi'] = "Anda diharuskan berangkat menuju plant sunter : "+str(formatted_time)
         df_base.loc[index, 'Period'] = "S1P1"
       elif round(duration_minutes) > 120 and round(duration_minutes) <= 240:
         waktu = datetime.combine(datetime.today(), datetime.min.time().replace(hour=9))
         time_backwards = waktu - timedelta(minutes=duration_minutes)
-        df_base.loc[index, 'Rekomendasi'] = "Anda diharuskan berangkat menuju plant sunter"+str(time_backwards.time())
+        formatted_time = time_backwards.strftime("%H:%M")
+        df_base.loc[index, 'Rekomendasi'] = "Anda diharuskan berangkat menuju plant sunter : "+str(formatted_time)
         df_base.loc[index, 'Period'] = "S1P2"
       elif round(duration_minutes) > 240 and round(duration_minutes) <= 360:
         waktu = datetime.combine(datetime.today(), datetime.min.time().replace(hour=12))
         time_backwards = waktu - timedelta(minutes=duration_minutes)
-        df_base.loc[index, 'Rekomendasi'] = "Anda diharuskan berangkat menuju plant sunter"+str(time_backwards.time())
+        formatted_time = time_backwards.strftime("%H:%M")
+        df_base.loc[index, 'Rekomendasi'] = "Anda diharuskan berangkat menuju plant sunter : "+str(formatted_time)
         df_base.loc[index, 'Period'] = "S1P3"
       else:
         waktu = datetime.combine(datetime.today(), datetime.min.time().replace(hour=15))
         time_backwards = waktu - timedelta(minutes=duration_minutes)
-        df_base.loc[index, 'Rekomendasi'] = "Anda diharuskan berangkat menuju plant sunter"+str(time_backwards.time())
+        formatted_time = time_backwards.strftime("%H:%M")
+        df_base.loc[index, 'Rekomendasi'] = "Anda diharuskan berangkat menuju plant sunter : "+str(formatted_time)
         df_base.loc[index, 'Period'] = "S1P4"
 
       
@@ -76,7 +80,8 @@ def process_data():
     # df_base['Recomm'] = array_recomm
     # df_base['Period'] = array_period
     global data_array
-    data_array = df_base.to_dict(orient='records')
+    df_base_sorted = df_base.sort_values(by='Period', ascending=True)
+    data_array = df_base_sorted.to_dict(orient='records')
     return jsonify({"message": "File uploaded successfully", "data": data_array}), 200
   except Exception as e:
     return jsonify({"error": f"Error processing file: {str(e)}"}), 400
