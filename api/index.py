@@ -34,7 +34,7 @@ def process_data():
 
     for index, row in df_base.iterrows():
       # print(row['Lat Long'])
-      resultgoogle = cek_jarak(row['Lat Long'])
+      resultgoogle = cek_jarak(row['LatLong'])
       print(resultgoogle["rows"][0]["elements"][0]["distance"]["text"])
       # df_base['Jarak'] = resultgoogle["rows"][0]["elements"][0]["distance"]["text"]
       print(resultgoogle['rows'][0]['elements'][0]['duration']['value'])
