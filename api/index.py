@@ -32,6 +32,7 @@ def process_data():
       # print(row['Lat Long'])
       resultgoogle = cek_jarak(row['Lat Long'])
       print(resultgoogle["rows"][0]["elements"][0]["distance"]["text"])
+      df_base['Jarak'] = resultgoogle["rows"][0]["elements"][0]["distance"]["text"]
       print(resultgoogle['rows'][0]['elements'][0]['duration']['value'])
       duration_seconds = resultgoogle['rows'][0]['elements'][0]['duration']['value']
       distance = resultgoogle["rows"][0]["elements"][0]["distance"]["text"]
