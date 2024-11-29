@@ -47,21 +47,20 @@ def process_data():
       
 
       if round(duration_minutes) <= 120:
-        waktu = datetime.combine(datetime.today(), datetime.min.time().replace(hour=6))
-
         if index > 0:
+          waktu = datetime.combine(datetime.today(), datetime.min.time().replace(hour=6))
           time_backwards = waktu - timedelta(minutes=duration_minutes-30)
           formatted_time = time_backwards.strftime("%H:%M")
           df_base.loc[index, 'Rekomendasi'] = "Anda diharuskan berangkat menuju plant sunter : "+str(formatted_time)
           df_base.loc[index, 'Period'] = "S1P1"
         else:
+          waktu = datetime.combine(datetime.today(), datetime.min.time().replace(hour=6))
           time_backwards = waktu - timedelta(minutes=duration_minutes)
           formatted_time = time_backwards.strftime("%H:%M")
           df_base.loc[index, 'Rekomendasi'] = "Anda diharuskan berangkat menuju plant sunter : "+str(formatted_time)
           df_base.loc[index, 'Period'] = "S1P1"
         
       elif round(duration_minutes) > 120 and round(duration_minutes) <= 240:
-       
         if index > 0:
           waktu = datetime.combine(datetime.today(), datetime.min.time().replace(hour=9))
           time_backwards = waktu - timedelta(minutes=duration_minutes-30)
@@ -74,12 +73,7 @@ def process_data():
           formatted_time = time_backwards.strftime("%H:%M")
           df_base.loc[index, 'Rekomendasi'] = "Anda diharuskan berangkat menuju plant sunter : "+str(formatted_time)
           df_base.loc[index, 'Period'] = "S1P2"
-
-        
-      
       elif round(duration_minutes) > 240 and round(duration_minutes) <= 360:
-        
-
         if index > 0:
           waktu = datetime.combine(datetime.today(), datetime.min.time().replace(hour=12))
           time_backwards = waktu - timedelta(minutes=duration_minutes-30)
@@ -92,11 +86,7 @@ def process_data():
           formatted_time = time_backwards.strftime("%H:%M")
           df_base.loc[index, 'Rekomendasi'] = "Anda diharuskan berangkat menuju plant sunter : "+str(formatted_time)
           df_base.loc[index, 'Period'] = "S1P3"
-
-      
       else:
-        
-
         if index > 0:
           waktu = datetime.combine(datetime.today(), datetime.min.time().replace(hour=15))
           time_backwards = waktu - timedelta(minutes=duration_minutes-30)
