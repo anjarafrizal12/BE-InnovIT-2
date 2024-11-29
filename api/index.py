@@ -28,10 +28,25 @@ def process_data():
   try:
     global df_base
     # df_base = pd.read_excel(BytesIO(file.read()))
-    df_base['Jarak'] = "145 km"
-    df_base['Estimasi'] = "1 Jam 45 Menit"
-    df_base['Period'] = "S1P1"
-    df_base['Rekomendasi'] = "Anda sebaiknya berangkat puluk 05:30"
+
+    for index, row in df_base.iterrows():
+      resultgoogle = cek_jarak(row['Lat Long'])
+      duration_seconds = result['rows'][0]['elements'][0]['duration']['value']
+      distance = result["rows"][0]["elements"][0]["distance"]["text"]
+      duration_minutes = duration_seconds / 60
+
+      if round(duration_minutes) <= 120:
+        df_base['Period'] = "S1P1"
+      elif round(duration_minutes) > 120 and round(duration_minutes) <= 240:
+        df_base['Period'] = "S1P2"
+      elif round(duration_minutes) > 240 and round(duration_minutes) <= 360:
+        df_base['Period'] = "S1P3"
+      else:
+        df_base['Period'] = "S1P4"
+      
+      df_base['Jarak'] = distance
+      df_base['Estimasi'] = result['rows'][0]['elements'][0]['duration']['value']
+      df_base['Rekomendasi'] = "Anda sebaiknya berangkat puluk 05:30"
             # Mengonversi data Excel menjadi dictionary
     global data_array
     data_array = df_base.to_dict(orient='records')
