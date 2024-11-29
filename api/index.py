@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 # Array untuk menyimpan data
 data_array = []
-df_base = null
+df_base = None
 
 API_KEY = 'AIzaSyACzawZOpNwNB58pQoa28lFhp89Yor5aVI'
 gmaps = googlemaps.Client(key=API_KEY)
@@ -22,6 +22,23 @@ def cek_jarak(coordinate):
                                 language="id",
                                 units="metric")
   return result
+
+@app.route('/process', methods=['POST'])
+def process_data():
+  try:
+    global df_base
+    # df_base = pd.read_excel(BytesIO(file.read()))
+    df_base['Jarak'] = "145 km"
+    df_base['Estimasi'] = "1 Jam 45 Menit"
+    df_base['Period'] = "S1P1"
+    df_base['Rekomendasi'] = "Anda sebaiknya berangkat puluk 05:30"
+            # Mengonversi data Excel menjadi dictionary
+    global data_array
+    data_array = df_base.to_dict(orient='records')
+    return jsonify({"message": "File uploaded successfully", "data": data_array}), 200
+  except Exception as e:
+    return jsonify({"error": f"Error processing file: {str(e)}"}), 400
+  
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
