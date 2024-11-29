@@ -2,6 +2,7 @@ import os
 from flask import Flask, request, jsonify
 import pandas as pd
 from io import BytesIO
+from datetime import datetime, timedelta
 import googlemaps
 
 app = Flask(__name__)
@@ -40,15 +41,27 @@ def process_data():
 
       df_base.loc[index, 'Jarak'] = distance
       df_base.loc[index, 'Estimasi'] = resultgoogle['rows'][0]['elements'][0]["duration"]["text"]
+      
 
       if round(duration_minutes) <= 120:
-        
+        waktu = datetime.combine(datetime.today(), datetime.min.time().replace(hour=6))
+        time_backwards = waktu - timedelta(minutes=duration_minutes)
+        df_base.loc[index, 'Rekomendasi'] = "Anda diharuskan berangkat menuju plant sunter"+str(time_backwards.time())
         df_base.loc[index, 'Period'] = "S1P1"
       elif round(duration_minutes) > 120 and round(duration_minutes) <= 240:
+        waktu = datetime.combine(datetime.today(), datetime.min.time().replace(hour=9))
+        time_backwards = waktu - timedelta(minutes=duration_minutes)
+        df_base.loc[index, 'Rekomendasi'] = "Anda diharuskan berangkat menuju plant sunter"+str(time_backwards.time())
         df_base.loc[index, 'Period'] = "S1P2"
       elif round(duration_minutes) > 240 and round(duration_minutes) <= 360:
+        waktu = datetime.combine(datetime.today(), datetime.min.time().replace(hour=12))
+        time_backwards = waktu - timedelta(minutes=duration_minutes)
+        df_base.loc[index, 'Rekomendasi'] = "Anda diharuskan berangkat menuju plant sunter"+str(time_backwards.time())
         df_base.loc[index, 'Period'] = "S1P3"
       else:
+        waktu = datetime.combine(datetime.today(), datetime.min.time().replace(hour=15))
+        time_backwards = waktu - timedelta(minutes=duration_minutes)
+        df_base.loc[index, 'Rekomendasi'] = "Anda diharuskan berangkat menuju plant sunter"+str(time_backwards.time())
         df_base.loc[index, 'Period'] = "S1P4"
 
       
