@@ -32,20 +32,23 @@ def process_data():
       # print(row['Lat Long'])
       resultgoogle = cek_jarak(row['Lat Long'])
       print(resultgoogle["rows"][0]["elements"][0]["distance"]["text"])
-      df_base['Jarak'] = resultgoogle["rows"][0]["elements"][0]["distance"]["text"]
+      # df_base['Jarak'] = resultgoogle["rows"][0]["elements"][0]["distance"]["text"]
       print(resultgoogle['rows'][0]['elements'][0]['duration']['value'])
       duration_seconds = resultgoogle['rows'][0]['elements'][0]['duration']['value']
       distance = resultgoogle["rows"][0]["elements"][0]["distance"]["text"]
       duration_minutes = duration_seconds / 60
 
+      df_base.loc[index, 'Jarak'] = distance
+
       if round(duration_minutes) <= 120:
-        df_base['Period'] = "S1P1"
+        
+        df_base.loc[index, 'Period'] = "S1P1"
       elif round(duration_minutes) > 120 and round(duration_minutes) <= 240:
-        df_base['Period'] = "S1P2"
+        df_base.loc[index, 'Period'] = "S1P2"
       elif round(duration_minutes) > 240 and round(duration_minutes) <= 360:
-        df_base['Period'] = "S1P3"
+        df_base.loc[index, 'Period'] = "S1P3"
       else:
-        df_base['Period'] = "S1P4"
+        df_base.loc[index, 'Period'] = "S1P4"
 
       
       # array_jarak.append(distance)
