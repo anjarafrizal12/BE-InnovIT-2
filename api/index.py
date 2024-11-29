@@ -39,6 +39,7 @@ def process_data():
       duration_minutes = duration_seconds / 60
 
       df_base.loc[index, 'Jarak'] = distance
+      df_base.loc[index, 'Estimasi'] = resultgoogle['rows'][0]['elements'][0]['duration']['value']
 
       if round(duration_minutes) <= 120:
         
