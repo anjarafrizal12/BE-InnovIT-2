@@ -3,9 +3,12 @@ from flask import Flask, request, jsonify
 import pandas as pd
 from io import BytesIO
 from datetime import datetime, timedelta
+from flask_cors import CORS
 import googlemaps
 
 app = Flask(__name__)
+
+CORS(app)
 
 # Array untuk menyimpan data
 df_base = None
