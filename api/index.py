@@ -105,10 +105,10 @@ def upload_file():
         try:
             global df_base
             df_base = pd.read_excel(BytesIO(file.read()))
-            df['Jarak'] = "-"
-            df['Estimasi'] = "-"
-            df['Period'] = "-"
-            df['Rekomendasi'] = "-"
+            df_base['Jarak'] = "-"
+            df_base['Estimasi'] = "-"
+            df_base['Period'] = "-"
+            df_base['Rekomendasi'] = "-"
             # Mengonversi data Excel menjadi dictionary
             global data_array
             data_array = df_base.to_dict(orient='records')
