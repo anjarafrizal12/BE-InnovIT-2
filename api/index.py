@@ -36,14 +36,15 @@ def upload_file():
     if file and file.filename.endswith('.xlsx'):
         # Membaca file Excel langsung dari bytes (tanpa menyimpannya ke disk)
         try:
+            global df_base
             df_base = pd.read_excel(BytesIO(file.read()))
-            df['Jarak'] = "145 km"
-            df['Estimasi'] = "1 Jam 45 Menit"
-            df['Period'] = "S1P1"
-            df['Rekomendasi'] = "Anda sebaiknya berangkat puluk 05:30"
+            # df['Jarak'] = "145 km"
+            # df['Estimasi'] = "1 Jam 45 Menit"
+            # df['Period'] = "S1P1"
+            # df['Rekomendasi'] = "Anda sebaiknya berangkat puluk 05:30"
             # Mengonversi data Excel menjadi dictionary
             global data_array
-            data_array = df.to_dict(orient='records')
+            data_array = df_base.to_dict(orient='records')
             return jsonify({"message": "File uploaded successfully", "data": data_array}), 200
         except Exception as e:
             return jsonify({"error": f"Error processing file: {str(e)}"}), 400
