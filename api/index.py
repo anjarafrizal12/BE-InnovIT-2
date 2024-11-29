@@ -7,11 +7,6 @@ import googlemaps
 app = Flask(__name__)
 
 # Array untuk menyimpan data
-data_array = []
-array_period = []
-array_jarak = []
-array_recomm = []
-array_est = []
 df_base = None
 
 API_KEY = 'AIzaSyACzawZOpNwNB58pQoa28lFhp89Yor5aVI'
@@ -30,15 +25,6 @@ def cek_jarak(coordinate):
 @app.route('/process', methods=['POST'])
 def process_data():
   try:
-    global df_base
-    global array_period
-    global array_jarak
-    global array_recomm
-    global array_est
-    array_jarak = []
-    array_recomm = []
-    array_period = []
-    array_est = []
     
     # df_base = pd.read_excel(BytesIO(file.read()))
 
@@ -49,18 +35,18 @@ def process_data():
       duration_minutes = duration_seconds / 60
 
       if round(duration_minutes) <= 120:
-        array_period.append("S1P1")
+        df_base['Period'] = "S1P1"
       elif round(duration_minutes) > 120 and round(duration_minutes) <= 240:
-        array_period.append("S1P2")
+        df_base['Period'] = "S1P2"
       elif round(duration_minutes) > 240 and round(duration_minutes) <= 360:
-        array_period.append("S1P3")
+        df_base['Period'] = "S1P3"
       else:
-        array_period.append("S1P4")
+        df_base['Period'] = "S1P4"
 
       
-      array_jarak.append(distance)
-      array_est.append(df_base.apply(resultgoogle['rows'][0]['elements'][0]['duration']['value']))
-      array_recomm.append("Anda sebaiknya berangkat puluk 05:30")
+      # array_jarak.append(distance)
+      # array_est.append(df_base.apply(resultgoogle['rows'][0]['elements'][0]['duration']['value']))
+      # array_recomm.append("Anda sebaiknya berangkat puluk 05:30")
       # df_base['Estimasi'] = df_base.apply(resultgoogle['rows'][0]['elements'][0]['duration']['value'])
       # df_base['Rekomendasi'] = "Anda sebaiknya berangkat puluk 05:30"
             # Mengonversi data Excel menjadi dictionary
